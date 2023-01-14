@@ -1,7 +1,7 @@
 import {initializeApp} from "firebase/app"
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from "firebase/storage"
 import {upload} from 'scripts/upload'
-import {firebaseConfig} from "scripts/firebaseConfig";
+import {firebaseConfig} from "cfg/firebaseConfig";
 
 const app = initializeApp(firebaseConfig)
 const storage = getStorage(app)
