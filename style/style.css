@@ -13,7 +13,7 @@ body{
     border-radius: 1rem;
     background-color: #fff;
     padding: 1rem;
-    box-sizing: 2px 3px 10px rgba(0,0,0, .2);
+    box-shadow: 2px 3px 10px rgba(0,0,0, .2);
 }
 .btn {
     color: #42b983;
@@ -47,6 +47,10 @@ body{
 input[type=file]{
     display: none;
 }
+.alert-text{
+    text-align: center;
+    color: red;
+}
 
 .preview {
     display: flex;
@@ -54,9 +58,9 @@ input[type=file]{
     padding: .5rem;
 }
 .preview-image {
+    min-width: 100px;
     position: relative;
-    margin-bottom: .5rem;
-    margin-right: .5rem;
+    margin: .5rem;
     overflow: hidden;
 }
 
@@ -78,7 +82,7 @@ input[type=file]{
 }
 
 .preview-image:hover .preview-info{
-    bottom: 0;
+    bottom: 10%;
 }
 
 .preview-remove{
@@ -112,7 +116,9 @@ input[type=file]{
     transition: bottom .22s;
 
 }
-.preview-file-name{
+.wrap-preview{
+    display: block;
+    max-width: 130px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

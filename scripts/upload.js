@@ -5,7 +5,7 @@ function bytesToSize(bytes) {
     return Math.round(bytes/Math.pow(1024,i))+ size[i]
 }
 
-const elemetn = (tag, classes = [], content) => {
+const element = (tag, classes = [], content) => {
     const node = document.createElement(tag)
 
     if (classes.length){
@@ -23,9 +23,10 @@ export function upload(selector, options = {}){
     let files = []
     const onUpload = options.onUpload ?? noop
     const input = document.querySelector(selector)
-    const preview = elemetn('div', ['preview'])
-    const open = elemetn('button', ['btn'],'Открыть')
-    const upload = elemetn('button', ['btn','primary'],'Загрузить')
+    const preview = element('div', ['preview'])
+    const open = element('button', ['btn'],'Открыть')
+    const upload = element('button', ['btn','primary'],'Загрузить')
+    const message = element('div', ['alert-text'], 'Выберите изображение')
     upload.style.display = 'none'
 
     if (options.multi){
@@ -38,9 +39,11 @@ export function upload(selector, options = {}){
     input.insertAdjacentElement('afterend', preview)
     input.insertAdjacentElement('afterend', upload)
     input.insertAdjacentElement('afterend', open)
+    input.insertAdjacentElement('afterend', message)
     const triggerInput = () => input.click()
 
     const changeHandler = event => {
+        console.log(event.target.files.length)
         if(!event.target.files.length){
             return
         }
@@ -51,7 +54,7 @@ export function upload(selector, options = {}){
            if(!file.type.match('image')){
             return
            }
-
+            document.querySelector('.alert-text').style.display = 'none'
            const reader = new FileReader()
 
            reader.onload = ev => {
@@ -60,8 +63,8 @@ export function upload(selector, options = {}){
             <div class="preview-image">
             <div class="preview-remove" data-name="${file.name}">&times;</div>
             <img src="${src}" alt="${file.name}" />
-            <div class="preview-info">
-            <span class="preview-file-name">${file.name}</span>
+            <div class="wrap-preview"><span>${file.name}</span></div>            
+            <div class="preview-info">            
             ${bytesToSize(file.size)}
             </div>
             </div>
@@ -79,9 +82,10 @@ export function upload(selector, options = {}){
        }
        const {name} = event.target.dataset
        files = files.filter(file => file.name !== name)
-
-       if (!files.length){
+        console.log(files.length);
+        if (!files.length){
         upload.style.display = 'none'
+            message.style.display = 'block'
        }
 
        const block = preview
@@ -93,12 +97,12 @@ export function upload(selector, options = {}){
 
     }
     const clearPreview = el => {
-        el.style.bottom = '0'
+        el.style.bottom = '10%'
         el.innerHTML = '<div class="preview-info-progress"></div>'
         
     }
     const uploadHandler = () => {
-        preview.querySelectorAll('.preview-remove').forEach(e => e.remove())
+        // preview.querySelectorAll('.preview-remove').forEach(e => e.remove())
         const previewInfo = preview.querySelectorAll('.preview-info')
         previewInfo.forEach(clearPreview)
         onUpload(files, previewInfo)       
