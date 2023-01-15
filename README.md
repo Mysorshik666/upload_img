@@ -1,1 +1,1 @@
-﻿# upload image in Firebase
+﻿# upload image to Firebase
